@@ -20,6 +20,9 @@
 # production
 /build
 
+# contentlayer (generated at build time)
+/.contentlayer/
+
 # misc
 .DS_Store
 *.pem
