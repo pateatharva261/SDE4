@@ -1,0 +1,18 @@
+# Local resources — reference books / PDFs (large, not distributed)
+resources/
+*.pdf
+
+# Editor / IDE
+.vscode/
+
+# OS cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Node / tooling (in case any is added later)
+node_modules/
+npm-debug.log*
+
+# Temporary helper scripts used during setup
+_*.ps1

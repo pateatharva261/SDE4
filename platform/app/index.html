@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>System Design Mastery</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- CDN libraries: Markdown, diagrams, syntax highlight -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- Sidebar -->
+    <aside id="sidebar">
+      <div id="sidebar-header">
+        <h1>System Design Mastery</h1>
+        <p>Engineer → Staff/Principal architect</p>
+      </div>
+      <div id="progress-wrap">
+        <div id="progress-bar-bg"><div id="progress-bar"></div></div>
+        <div id="progress-text">0 / 0 lessons complete</div>
+      </div>
+      <div id="search"><input id="search-input" type="text" placeholder="Search lessons…  (press / )" /></div>
+      <nav id="nav"></nav>
+    </aside>
+
+    <!-- Main -->
+    <main id="main">
+      <div id="topbar">
+        <button class="btn" onclick="document.getElementById('sidebar').classList.toggle('open')" style="display:none" id="menu-btn">☰</button>
+        <span class="crumbs" id="crumbs">Welcome</span>
+        <button class="btn" id="btn-flash" style="display:none">🃏 Flashcards</button>
+        <button class="btn" id="btn-done" style="display:none">Mark complete</button>
+      </div>
+      <div id="content">
+        <div id="welcome">
+          <h2>Loading the course…</h2>
+          <p>If nothing appears, you likely opened this via <code>file://</code>.</p>
+          <p>Run <span class="kbd">python -m http.server 8080</span> inside the <code>platform/</code> folder,
+             then open <span class="kbd">http://localhost:8080/app/</span></p>
+        </div>
+      </div>
+      <div id="pager"></div>
+    </main>
+  </div>
+
+  <!-- Flashcard overlay -->
+  <div id="flash-overlay">
+    <div id="flash-card">
+      <div id="flash-meta"></div>
+      <div id="flash-body"></div>
+      <div id="flash-actions">
+        <button class="btn" onclick="prevFlash()">← Prev</button>
+        <button class="btn primary" onclick="flipFlash()">Flip (space)</button>
+        <button class="btn" onclick="nextFlash()">Next →</button>
+      </div>
+      <div class="hint">space = flip · ← → = navigate · esc = close</div>
+    </div>
+  </div>
+
+  <script src="manifest.js"></script>
+  <script src="app.js"></script>
+  <script>
+    // global "/" focuses search
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "/" && e.target.tagName !== "INPUT") { e.preventDefault(); document.getElementById("search-input").focus(); }
+    });
+    // show menu button on small screens
+    if (window.matchMedia("(max-width: 860px)").matches) document.getElementById("menu-btn").style.display = "inline-block";
+  </script>
+</body>
+</html>
