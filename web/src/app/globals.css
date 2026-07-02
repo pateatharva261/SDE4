@@ -1,0 +1,108 @@
+@import "tailwindcss";
+@config "../../tailwind.config.ts";
+
+@layer base {
+  :root {
+    /* — Dark theme (default, matches current app) — */
+    --bg:        13 17 23;        /* #0d1117 */
+    --bg-elev:   22 27 34;        /* #161b22 */
+    --bg-elev2:  28 34 48;        /* #1c2230 */
+    --border:    42 49 64;        /* #2a3140 */
+    --text:      230 237 243;     /* #e6edf3 */
+    --text-dim:  154 166 178;     /* #9aa6b2 */
+    --accent:    88 166 255;      /* #58a6ff */
+    --accent-2:  126 231 135;     /* #7ee787 */
+    --warn:      240 163 94;      /* #f0a35e */
+    --done:      46 160 67;       /* #2ea043 */
+    --planned:   110 118 129;     /* #6e7681 */
+
+    /* Layout */
+    --sidebar-w: 340px;
+    --max-read:  860px;
+
+    /* Motion (respected everywhere) */
+    --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+    --ease-spring:    cubic-bezier(0.34, 1.56, 0.64, 1);
+    --dur-fast:  120ms;
+    --dur-base:  200ms;
+    --dur-slow:  320ms;
+
+    /* Radii */
+    --radius-sm: 6px;
+    --radius:    10px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+
+    /* Shadows (dark-friendly, subtle) */
+    --shadow-sm:  0 1px 2px rgba(0,0,0,0.4);
+    --shadow:     0 4px 12px rgba(0,0,0,0.35), 0 1px 2px rgba(0,0,0,0.3);
+    --shadow-lg:  0 20px 40px rgba(0,0,0,0.5), 0 8px 16px rgba(0,0,0,0.35);
+    --glow-accent: 0 0 0 1px rgba(88,166,255,0.4), 0 0 24px rgba(88,166,255,0.2);
+  }
+
+  [data-theme="light"] {
+    --bg:        250 251 253;     /* #fafbfd */
+    --bg-elev:   255 255 255;
+    --bg-elev2:  242 244 248;
+    --border:    226 230 238;
+    --text:      15 23 42;        /* slate-900 */
+    --text-dim:  100 116 139;     /* slate-500 */
+    --accent:    37 99 235;       /* blue-600 */
+    --accent-2:  22 163 74;       /* green-600 */
+    --warn:      217 119 6;
+    --done:      21 128 61;
+    --planned:   148 163 184;
+  }
+
+  @media (max-width: 860px) {
+    :root { --sidebar-w: 300px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  html, body { height: 100%; }
+  body {
+    background: rgb(var(--bg));
+    color: rgb(var(--text));
+    font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+                 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-feature-settings: 'cv02','cv03','cv04','cv11';
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+}
+
+.prose-lesson {
+  @apply max-w-none;
+  h1 { @apply text-lesson-h1 border-b border-border pb-3.5 mt-2 mb-6 font-bold; }
+  h2 { @apply text-lesson-h2 border-b border-border pb-1.5 mt-10 mb-4 font-semibold; }
+  h3 { @apply text-lesson-h3 mt-6 mb-3 text-accent-2 font-medium; }
+  p, li { color: rgb(var(--text)); }
+  code { @apply bg-bg-elev2 px-1.5 py-0.5 rounded-sm text-[13.5px] font-mono; }
+  pre  { @apply bg-bg-elev border border-border rounded-lg p-4 overflow-x-auto; }
+  blockquote {
+    @apply border-l-[3px] border-accent bg-bg-elev pl-4 py-2 italic text-text-dim;
+    p, li { color: inherit; }
+  }
+  table { @apply w-full text-[13.5px] border-collapse; }
+  th { @apply bg-bg-elev2 text-left px-3 py-2 border border-border font-semibold; }
+  td { @apply px-3 py-2 border border-border; }
+  tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+  hr { @apply border-t border-border my-8; }
+  a  { @apply text-accent underline underline-offset-2 hover:no-underline; }
+}
+
+.diagram-panel {
+  color: #0f172a !important;
+  * {
+    color: #0f172a !important;
+  }
+  text, tspan, text * {
+    fill: #0f172a !important;
+  }
+}
