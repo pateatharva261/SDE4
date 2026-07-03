@@ -6,6 +6,7 @@ import { Pager } from '@/components/layout/Pager';
 import { TocRail } from '@/components/content/TocRail';
 import { ReadingProgressBar } from '@/components/content/ReadingProgressBar';
 import { ActiveFlashcardTracker } from '@/components/content/ActiveFlashcardTracker';
+import { MarkCompleteButton } from '@/components/content/MarkCompleteButton';
 
 export function generateStaticParams() {
   return allLessons.map((lesson) => ({
@@ -32,10 +33,16 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
       {/* Sync active flashcards to client state */}
       <ActiveFlashcardTracker flashcards={lesson.flashcards as any[]} />
 
-      {/* Primary Layout Container */}
-      <div className="flex w-full items-start gap-10 max-w-7xl mx-auto px-6 py-10 md:py-14">
-        {/* Main lesson content panel */}
-        <article className="flex-1 min-w-0 max-w-[var(--max-read)]">
+      {/*
+       * Layout strategy:
+       * - px-8 gives a consistent left gutter at all sidebar states
+       * - xl:pr-56 reserves space so content never slides under the fixed TOC
+       * - max-w-[var(--max-read)] on the article keeps reading width stable
+       * - mx-auto recenters within the available space as sidebar expands/collapses
+       * - No transition needed here — the parent flex container handles the animation
+       */}
+      <div className="w-full px-8 py-10 md:py-14 xl:pr-56">
+        <article className="w-full max-w-[var(--max-read)] mx-auto">
           {/* Header */}
           <header className="mb-4">
             <h1 className="text-3xl font-extrabold tracking-tight text-text mb-2">
@@ -54,13 +61,16 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
           {/* Markdown Content rendering */}
           <MarkdownRenderer html={lesson.body.html} />
 
+          {/* Mark complete at bottom of lesson */}
+          <MarkCompleteButton />
+
           {/* Bottom Pager */}
           <Pager />
         </article>
-
-        {/* Right Rail Table of Contents */}
-        <TocRail />
       </div>
+
+      {/* TOC Rail — fixed to viewport right edge, never shifts with layout */}
+      <TocRail />
     </>
   );
 }

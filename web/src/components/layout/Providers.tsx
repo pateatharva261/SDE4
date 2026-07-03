@@ -15,9 +15,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
       {children}
       <Toaster
         theme="dark"
-        position="top-right"
+        position="bottom-center"
         closeButton
         richColors
+        offset={24}
       />
     </ThemeProvider>
   );

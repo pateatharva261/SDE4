@@ -55,34 +55,36 @@ export function TocRail() {
   if (headings.length === 0) return null;
 
   return (
-    <nav className="w-56 shrink-0 hidden xl:block sticky top-20 self-start max-h-[calc(100vh-100px)] overflow-y-auto pl-6 border-l border-border/20 text-[12.5px] select-none [scrollbar-width:thin] [scrollbar-gutter:stable]">
-      <div className="text-[10px] font-mono tracking-wider font-bold text-text-dim/40 uppercase mb-3.5">
-        On this page
-      </div>
-      <ul className="space-y-3">
-        {headings.map((h) => {
-          const isActive = h.id === activeId;
-          return (
-            <li
-              key={h.id}
-              style={{ paddingLeft: h.level === 3 ? '12px' : '0px' }}
-              className="relative"
-            >
-              {isActive && (
-                <div className="absolute top-[3px] -left-[25px] w-[2px] h-[14px] bg-accent rounded-full" />
-              )}
-              <a
-                href={`#${h.id}`}
-                className={`block transition-colors leading-relaxed hover:text-text cursor-pointer ${
-                  isActive ? 'text-accent font-semibold' : 'text-text-dim font-medium'
-                }`}
+    <nav className="hidden xl:block fixed top-20 right-6 w-52 max-h-[calc(100vh-96px)] overflow-y-auto text-[12.5px] select-none [scrollbar-width:thin] z-20">
+      <div className="border-l border-border/20 pl-5">
+        <div className="text-[10px] font-mono tracking-wider font-bold text-text-dim/40 uppercase mb-3.5">
+          On this page
+        </div>
+        <ul className="space-y-3">
+          {headings.map((h) => {
+            const isActive = h.id === activeId;
+            return (
+              <li
+                key={h.id}
+                style={{ paddingLeft: h.level === 3 ? '12px' : '0px' }}
+                className="relative"
               >
-                {h.text}
-              </a>
-            </li>
-          );
-        })}
-      </ul>
+                {isActive && (
+                  <div className="absolute top-[3px] -left-[21px] w-[2px] h-[14px] bg-accent rounded-full" />
+                )}
+                <a
+                  href={`#${h.id}`}
+                  className={`block transition-colors leading-relaxed hover:text-text cursor-pointer ${
+                    isActive ? 'text-accent font-semibold' : 'text-text-dim font-medium'
+                  }`}
+                >
+                  {h.text}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </nav>
   );
 }

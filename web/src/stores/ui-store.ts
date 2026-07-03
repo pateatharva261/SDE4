@@ -8,13 +8,20 @@ export interface Flashcard {
 
 interface UiState {
   collapsedParts: Record<string, true>;
-  sidebarOpen: boolean;
+  sidebarOpen: boolean;       // mobile drawer open
+  sidebarCollapsed: boolean;  // desktop sidebar collapsed
+  shortcutsOpen: boolean;     // keyboard shortcuts modal open
+  diagramSvg: string | null;  // SVG content for diagram preview modal (null = closed)
   fontScale: 'sm' | 'base' | 'lg';
   searchQuery: string;
   activeFlashcards: Flashcard[];
   flashcardsOpen: boolean;
   togglePart(partId: string): void;
   setSidebarOpen(open: boolean): void;
+  setSidebarCollapsed(collapsed: boolean): void;
+  toggleSidebarCollapsed(): void;
+  setShortcutsOpen(open: boolean): void;
+  setDiagramSvg(svg: string | null): void;
   setFontScale(scale: 'sm' | 'base' | 'lg'): void;
   setSearchQuery(query: string): void;
   setActiveFlashcards(cards: Flashcard[]): void;
@@ -31,6 +38,9 @@ const customUiStorage = {
         state: {
           collapsedParts: JSON.parse(value),
           sidebarOpen: false,
+          sidebarCollapsed: false,
+          shortcutsOpen: false,
+          diagramSvg: null,
           fontScale: 'base',
           searchQuery: '',
           activeFlashcards: [],
@@ -54,7 +64,7 @@ const customUiStorage = {
   removeItem: (name: string) => {
     if (typeof window === 'undefined') return;
     localStorage.removeItem(name);
-  }
+  },
 };
 
 export const useUiStore = create<UiState>()(
@@ -62,6 +72,9 @@ export const useUiStore = create<UiState>()(
     (set) => ({
       collapsedParts: {},
       sidebarOpen: false,
+      sidebarCollapsed: false,
+      shortcutsOpen: false,
+      diagramSvg: null,
       fontScale: 'base',
       searchQuery: '',
       activeFlashcards: [],
@@ -77,6 +90,11 @@ export const useUiStore = create<UiState>()(
           return { collapsedParts };
         }),
       setSidebarOpen: (sidebarOpen) => set({ sidebarOpen }),
+      setSidebarCollapsed: (sidebarCollapsed) => set({ sidebarCollapsed }),
+      toggleSidebarCollapsed: () =>
+        set((state) => ({ sidebarCollapsed: !state.sidebarCollapsed })),
+      setShortcutsOpen: (shortcutsOpen) => set({ shortcutsOpen }),
+      setDiagramSvg: (diagramSvg) => set({ diagramSvg }),
       setFontScale: (fontScale) => set({ fontScale }),
       setSearchQuery: (searchQuery) => set({ searchQuery }),
       setActiveFlashcards: (activeFlashcards) => set({ activeFlashcards }),

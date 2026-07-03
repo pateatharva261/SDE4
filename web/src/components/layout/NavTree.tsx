@@ -7,7 +7,6 @@ import { COURSE } from '@/data/manifest';
 import { useUiStore } from '@/stores/ui-store';
 import { useProgress } from '@/hooks/useProgress';
 import { useHasMounted } from '@/hooks/useHasMounted';
-import { PartBadge } from '@/components/shared/PartBadge';
 import { ChevronDown, FileText, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
@@ -147,7 +146,18 @@ export function NavTree({ onItemClick }: NavTreeProps) {
                       <span className="text-[11px] font-mono font-bold text-accent tracking-wide uppercase shrink-0">
                         Part {p.num}
                       </span>
-                      <PartBadge status={p.status} />
+                      {/* Show DONE only when user has completed every lesson in this part */}
+                      {mounted && (() => {
+                        const allLessons = p.modules.flatMap((m) => m.lessons);
+                        if (allLessons.length > 0 && allLessons.every((l) => completed[l.id])) {
+                          return (
+                            <span className="inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono tracking-wider font-semibold border rounded-sm bg-done/10 text-done border-done/20">
+                              DONE
+                            </span>
+                          );
+                        }
+                        return null;
+                      })()}
                     </div>
                     <span className="text-[12.5px] font-medium text-text leading-tight group-hover:text-accent transition-colors truncate">
                       {p.title}
